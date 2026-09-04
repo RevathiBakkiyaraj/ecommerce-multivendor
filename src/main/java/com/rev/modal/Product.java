@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -32,8 +32,8 @@ public class Product {
 
     private String color;
 
-    @ElementCollection
-    private List<String> images = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> images = new ArrayList<>();
 
     private int numRatings;
 

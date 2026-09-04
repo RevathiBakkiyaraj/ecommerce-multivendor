@@ -3,6 +3,8 @@ package com.rev.service.impl;
 import com.rev.modal.Product;
 import com.rev.modal.Review;
 import com.rev.modal.User;
+import com.rev.modal.ReviewImage;
+import java.util.ArrayList;
 import com.rev.repository.ReviewRepository;
 import com.rev.request.CreateReviewRequest;
 import com.rev.service.ReviewService;
@@ -23,7 +25,16 @@ public class ReviewServiceImpl implements ReviewService {
         review.setProduct(product);
         review.setReviewText(req.getReviewText());
         review.setRating(req.getReviewRating());
-        review.setProductImages(req.getProductImages());
+        List<ReviewImage> reviewImages = new ArrayList<>();
+
+        for (String imageUrl : req.getProductImages()) {
+            ReviewImage reviewImage = new ReviewImage();
+            reviewImage.setImageUrl(imageUrl);
+            reviewImage.setReview(review);
+            reviewImages.add(reviewImage);
+        }
+
+        review.setProductImages(reviewImages);
 
         product.getReviews().add(review);
         return reviewRepository.save(review);

@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class Wishlist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne

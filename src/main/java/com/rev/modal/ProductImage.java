@@ -8,19 +8,15 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-public class VerificationCode {
+public class ProductImage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String otp;
+    private String imageUrl;
 
-    private String email;
-
-    @OneToOne
-    private User user;
-
-    @OneToOne
-    private Seller seller;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

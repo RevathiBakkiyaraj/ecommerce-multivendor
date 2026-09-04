@@ -3,6 +3,7 @@ package com.rev.service.impl;
 import com.rev.Exceptions.ProductException;
 import com.rev.modal.Category;
 import com.rev.modal.Product;
+import com.rev.modal.ProductImage;
 import com.rev.modal.Seller;
 import com.rev.repository.CategoryRepository;
 import com.rev.repository.ProductRepository;
@@ -71,7 +72,16 @@ public class ProductServiceImpl implements ProductService {
         product.setTitle(req.getTitle());
         product.setColor(req.getColor());
         product.setSellingPrice(req.getSellingPrice());
-        product.setImages(req.getImages());
+        List<ProductImage> productImages = new ArrayList<>();
+
+        for (String imageUrl : req.getImages()) {
+            ProductImage productImage = new ProductImage();
+            productImage.setImageUrl(imageUrl);
+            productImage.setProduct(product);
+            productImages.add(productImage);
+        }
+
+        product.setImages(productImages);
         product.setMrpPrice(req.getMrpPrice());
         product.setSizes(req.getSizes());
         product.setDiscountPercent(discountPercentage);
