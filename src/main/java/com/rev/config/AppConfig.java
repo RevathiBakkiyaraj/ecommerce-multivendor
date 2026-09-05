@@ -31,8 +31,16 @@ public class AppConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/sellers/login",
+                                "/sellers",
+                                "/sellers/verify/**"
+                        ).permitAll()
+
                         .requestMatchers("/api/products/*/reviews").permitAll()
+
                         .requestMatchers("/api/**").authenticated()
+
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
@@ -48,7 +56,7 @@ public class AppConfig {
             public @Nullable CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
                 CorsConfiguration cfg=new CorsConfiguration();
-                cfg.setAllowedOriginPatterns(Collections.singletonList("https://ecommerce-frontend-smoky-one.vercel.app/"));
+                cfg.setAllowedOriginPatterns(Collections.singletonList("https://ecommerce-frontend-smoky-one.vercel.app"));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
