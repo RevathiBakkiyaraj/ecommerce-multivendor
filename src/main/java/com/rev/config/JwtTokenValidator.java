@@ -23,6 +23,17 @@ import java.util.List;
 
 
 public class JwtTokenValidator extends OncePerRequestFilter {
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+
+        String path = request.getServletPath();
+
+        return path.equals("/sellers/login")
+                || path.equals("/sellers")
+                || path.startsWith("/sellers/verify/");
+    }
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
