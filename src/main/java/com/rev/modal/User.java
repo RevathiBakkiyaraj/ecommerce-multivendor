@@ -31,14 +31,14 @@ public class User {
 
     private String mobile;
 
-    private USER_ROLE  role = USER_ROLE.ROLE_CUSTOMER;
+    private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
-    @OneToMany
+    // Changed: added cascade = CascadeType.ALL
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
 
     @ManyToMany
     @JsonIgnore
     private Set<Coupon> usedCoupons = new HashSet<>();
 }
-
 

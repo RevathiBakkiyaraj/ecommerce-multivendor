@@ -1,11 +1,12 @@
 package com.rev.controller;
 
+import com.rev.modal.Address;
 import com.rev.modal.User;
 import com.rev.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.rev.modal.Address;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -15,7 +16,7 @@ public class UserController {
     @GetMapping("/api/users/profile")
     public ResponseEntity<User> UserProfileHandler(
             @RequestHeader("Authorization") String jwt
-            ) throws Exception {
+    ) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
 
@@ -30,8 +31,11 @@ public class UserController {
 
         User user = userService.findUserByJwtToken(jwt);
 
+        // Add new address to user
         user.getAddresses().add(address);
 
+        // Because of CascadeType.ALL,
+        // the new Address will also be saved
         User savedUser = userService.saveUser(user);
 
         return ResponseEntity.ok(savedUser);
